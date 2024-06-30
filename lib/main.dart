@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:weather_app/WeatherHome.dart';
 import 'package:weather_app/controller/CheckInternetProvider.dart';
 import 'package:weather_app/controller/ThemeProvider.dart';
+import 'package:weather_app/view/SplashScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,7 +29,8 @@ class MyApp extends StatelessWidget {
           theme: ThemeData.light(),
           darkTheme: ThemeData.dark(),
           routes: {
-            "/": (context) => WeatherHomePage(),
+            "/": (context) => SplashScreen(),
+            "WeatherHomePage": (context) => SplashScreen(),
           },
           onUnknownRoute: (settings) {
             return MaterialPageRoute(
