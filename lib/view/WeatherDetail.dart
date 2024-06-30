@@ -121,7 +121,7 @@ class WeatherDetail extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
-                          Icons.wind_power,
+                          Icons.sunny_snowing,
                           color: Colors.white,
                         ),
                         weatherInfoCard(

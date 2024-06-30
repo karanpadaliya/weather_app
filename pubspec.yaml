@@ -39,6 +39,8 @@ dependencies:
   flare_flutter: ^3.0.2
   flutter_spinkit: ^5.2.1
   intl: ^0.19.0
+  connectivity_plus: ^5.0.2
+  provider: ^6.1.2
 
 dev_dependencies:
   flutter_test:
