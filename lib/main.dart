@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/WeatherHome.dart';
 import 'package:weather_app/controller/CheckInternetProvider.dart';
+import 'package:weather_app/controller/ThemeProvider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,28 +16,33 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => CheckInternetProvider(),
-        )
+        ChangeNotifierProvider(create: (context) => CheckInternetProvider()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(primaryColor: Color(0xff676bd0)),
-        initialRoute: "/",
-        routes: {
-          "/": (context) => WeatherHomePage(),
-        },
-        onUnknownRoute: (settings) {
-          return MaterialPageRoute(
-            builder: (context) => Scaffold(
-              body: Center(
-                child: Text(
-                  "onUnknownRoute",
-                  style: TextStyle(fontSize: 40, color: Colors.black),
+      child: Consumer<ThemeProvider>(
+        builder: (BuildContext context, value, Widget? child) {
+          return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          initialRoute: "/",
+          themeMode: value.themeMode,
+          theme: ThemeData.light(),
+          darkTheme: ThemeData.dark(),
+          routes: {
+            "/": (context) => WeatherHomePage(),
+          },
+          onUnknownRoute: (settings) {
+            return MaterialPageRoute(
+              builder: (context) => Scaffold(
+                body: Center(
+                  child: Text(
+                    "onUnknownRoute",
+                    style: TextStyle(fontSize: 40, color: Colors.black),
+                  ),
                 ),
               ),
-            ),
-          );
+            );
+          },
+        );
         },
       ),
     );

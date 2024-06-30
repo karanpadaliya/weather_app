@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/controller/ApiService.dart';
 import 'package:weather_app/controller/CheckInternetProvider.dart';
+import 'package:weather_app/controller/ThemeProvider.dart';
 import 'package:weather_app/model/WeatherDataModel.dart';
 import 'package:weather_app/view/WeatherDetail.dart';
 
@@ -36,8 +37,7 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
     );
     Provider.of<CheckInternetProvider>(context, listen: false)
         .CheckingConnection();
-    myWeather(
-        ''); // Initial weather data fetch for a default city or empty state
+    myWeather('');
   }
 
   Future<void> myWeather(String cityName) async {
@@ -56,7 +56,11 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
       });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Error fetching weather data: $error'),
+          backgroundColor: Colors.red.withOpacity(0.4),
+          content: Text(
+            ':( something went wrong please try again',
+            style: TextStyle(fontSize: 16, color: Colors.white),
+          ),
         ),
       );
     }
@@ -106,6 +110,22 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
             ),
           ),
         ),
+        actions: [
+          Consumer<ThemeProvider>(
+            builder: (context, themeProvider, child) {
+              return IconButton(
+                icon: Icon(
+                  themeProvider.isDarkMode
+                      ? Icons.light_mode_outlined
+                      : Icons.dark_mode_outlined,
+                ),
+                onPressed: () {
+                  themeProvider.toggleTheme();
+                },
+              );
+            },
+          ),
+        ],
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.white,
         centerTitle: true,
