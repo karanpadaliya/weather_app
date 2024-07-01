@@ -11,15 +11,12 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-
   @override
   void initState() {
     super.initState();
     Future.delayed(
       Duration(seconds: 4),
-          () {
-        print("Navigating to WeatherHomePage"); // Debug print statement
+      () {
         Navigator.pushReplacementNamed(context, "WeatherHomePage");
       },
     );

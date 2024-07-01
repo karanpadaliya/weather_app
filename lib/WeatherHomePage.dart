@@ -20,6 +20,7 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
   late WeatherData weatherInfo;
   bool isLoading = false;
   TextEditingController searchCityNameController = TextEditingController();
+  bool isExpanded = false;
 
   @override
   void initState() {
@@ -75,42 +76,73 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
     return Scaffold(
       backgroundColor: const Color(0xff676BD0),
       appBar: AppBar(
-        title: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 5.5),
+        title: AnimatedContainer(
+          duration: Duration(milliseconds: 300),
+          curve: Curves.slowMiddle,
           height: 50,
-          width: 160,
+          width: isExpanded ? MediaQuery.of(context).size.width * 0.6 : 0,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(20),
           ),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: TextFormField(
-              textCapitalization: TextCapitalization.words,
-              keyboardType: TextInputType.text,
-              textAlign: TextAlign.start,
-              style: const TextStyle(fontSize: 16, letterSpacing: 2),
-              controller: searchCityNameController,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: "Find City",
-                hintMaxLines: 1,
-                hintStyle: const TextStyle(color: Colors.grey),
-                suffixIcon: IconButton(
-                  onPressed: () {
-                    String cityName = searchCityNameController.text.trim();
-                    if (cityName.isNotEmpty) {
-                      myWeather(cityName);
+          child: Row(
+            children: [
+              if (isExpanded)
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: TextFormField(
+                      textCapitalization: TextCapitalization.words,
+                      keyboardType: TextInputType.text,
+                      textAlign: TextAlign.start,
+                      style:
+                          const TextStyle(fontSize: 16, letterSpacing: 2,fontWeight: FontWeight.w500),
+                      controller: searchCityNameController,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Find City",
+                        hintMaxLines: 1,
+                        hintStyle: const TextStyle(color: Colors.grey),
+                      ),
+                      onFieldSubmitted: (value) {
+                        if (value.trim().isNotEmpty) {
+                          myWeather(value.trim());
+                          searchCityNameController.clear();
+                          setState(() {
+                            isExpanded = false;
+                          });
+                        }
+                      },
+                    ),
+                  ),
+                ),
+              IconButton(
+                icon: Icon(Icons.close,
+                    color: Colors.black),
+                onPressed: () {
+                  setState(() {
+                    if (isExpanded &&
+                        searchCityNameController.text.trim().isNotEmpty) {
+                      myWeather(searchCityNameController.text.trim());
                       searchCityNameController.clear();
                     }
-                  },
-                  icon: const Icon(Icons.search),
-                ),
+                    isExpanded = !isExpanded;
+                  });
+                },
               ),
-            ),
+            ],
           ),
         ),
         actions: [
+          if (!isExpanded)
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                setState(() {
+                  isExpanded = true;
+                });
+              },
+            ),
           Consumer<ThemeProvider>(
             builder: (context, themeProvider, child) {
               return IconButton(
@@ -144,8 +176,7 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
-                          height: MediaQuery.of(context).size.height *
-                              0.9, // Adjust height as needed
+                          height: MediaQuery.of(context).size.height * 0.9,
                           child: Center(
                             child: isLoading
                                 ? const SpinKitFadingCube(color: Colors.white)
