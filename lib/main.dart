@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_app/WeatherHome.dart';
+import 'package:weather_app/WeatherHomePage.dart';
 import 'package:weather_app/controller/CheckInternetProvider.dart';
 import 'package:weather_app/controller/ThemeProvider.dart';
 import 'package:weather_app/view/SplashScreen.dart';
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
           darkTheme: ThemeData.dark(),
           routes: {
             "/": (context) => SplashScreen(),
-            "WeatherHomePage": (context) => SplashScreen(),
+            "WeatherHomePage": (context) => WeatherHomePage(),
           },
           onUnknownRoute: (settings) {
             return MaterialPageRoute(
