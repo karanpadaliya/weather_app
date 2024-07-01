@@ -95,8 +95,10 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
                       textCapitalization: TextCapitalization.words,
                       keyboardType: TextInputType.text,
                       textAlign: TextAlign.start,
-                      style:
-                          const TextStyle(fontSize: 16, letterSpacing: 2,fontWeight: FontWeight.w500),
+                      style: const TextStyle(
+                          fontSize: 16,
+                          letterSpacing: 2,
+                          fontWeight: FontWeight.w500),
                       controller: searchCityNameController,
                       decoration: InputDecoration(
                         border: InputBorder.none,
@@ -117,8 +119,7 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
                   ),
                 ),
               IconButton(
-                icon: Icon(Icons.close,
-                    color: Colors.black),
+                icon: Icon(Icons.close, color: Colors.black),
                 onPressed: () {
                   setState(() {
                     if (isExpanded &&
