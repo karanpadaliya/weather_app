@@ -58,7 +58,7 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           backgroundColor: Colors.red.withOpacity(0.4),
-          content: Text(
+          content: const Text(
             ':( something went wrong please try again',
             style: TextStyle(fontSize: 16, color: Colors.white),
           ),
@@ -77,7 +77,7 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
       backgroundColor: const Color(0xff676BD0),
       appBar: AppBar(
         title: AnimatedContainer(
-          duration: Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 300),
           curve: Curves.slowMiddle,
           height: 50,
           width: isExpanded ? MediaQuery.of(context).size.width * 0.6 : 0,
@@ -100,11 +100,11 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
                           letterSpacing: 2,
                           fontWeight: FontWeight.w500),
                       controller: searchCityNameController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         hintText: "Find City",
                         hintMaxLines: 1,
-                        hintStyle: const TextStyle(color: Colors.grey),
+                        hintStyle: TextStyle(color: Colors.grey),
                       ),
                       onFieldSubmitted: (value) {
                         if (value.trim().isNotEmpty) {
@@ -119,7 +119,7 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
                   ),
                 ),
               IconButton(
-                icon: Icon(Icons.close, color: Colors.black),
+                icon: const Icon(Icons.close, color: Colors.black),
                 onPressed: () {
                   setState(() {
                     if (isExpanded &&
@@ -137,7 +137,7 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
         actions: [
           if (!isExpanded)
             IconButton(
-              icon: Icon(Icons.search),
+              icon: const Icon(Icons.search),
               onPressed: () {
                 setState(() {
                   isExpanded = true;
